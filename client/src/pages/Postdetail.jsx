@@ -172,7 +172,7 @@ const Postdetail = () => {
           <div className="flex justify-center items-start h-full">
             <Card
               hoverable
-              className="p-2 flex flex-col h-fit w-[24rem] md:w-auto"
+              className="p-2 flex flex-col h-fit w-[22rem] md:w-auto"
               cover={
                 <img
                   alt="example"
