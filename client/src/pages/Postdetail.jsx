@@ -169,54 +169,56 @@ const Postdetail = () => {
         <Loader />
       ) : (
         <div className="grid grid-cols-auto md:grid-cols-2 w-full p-2">
-          <Card
-            hoverable
-            className="p-2 flex flex-col h-fit"
-            cover={
-              <img
-                alt="example"
-                src={postData.imageUrl}
-                className="rounded-xl shadow-lg border md:h-[300px] bg-cover bg-center w-full "
-              />
-            }
-            key={postData._id}
-          >
-            <Meta
-              title={postData.title}
-              description={postData.description}
-              className="font-semibold flex flex-col gap-5"
-            />
-            <strong
-              className={`${
-                postData.private ? "text-blue-500" : "text-red-600"
-              }`}
+          <div className="flex justify-center items-start h-full">
+            <Card
+              hoverable
+              className="p-2 flex flex-col h-fit w-[24rem] md:w-auto"
+              cover={
+                <img
+                  alt="example"
+                  src={postData.imageUrl}
+                  className="rounded-xl shadow-lg border h-[300px] bg-cover bg-center w-full "
+                />
+              }
+              key={postData._id}
             >
-              {postData.private
-                ? "Post visibility : Private"
-                : "Post visibility : Public"}
-            </strong>
-            <div className="flex w-full justify-between items-center pt-3">
-              <p className="font-semibold text-end p-2 border rounded-lg w-fit">
-                Author : {postData?.userId?.username}
-              </p>
-              {tabView === "allposts" && (
-                <div className="flex justify-around items-center gap-7">
-                  <div
-                    className="border rounded-lg shadow-lg p-3 flex justify-center items-center text-[1.2rem] w-fit  cursor-pointer"
-                    onClick={() => setUpdateModal(true)}
-                  >
-                    <FaRegEdit />
+              <Meta
+                title={postData.title}
+                description={postData.description}
+                className="font-semibold flex flex-col gap-5"
+              />
+              <strong
+                className={`${
+                  postData.private ? "text-blue-500" : "text-red-600"
+                }`}
+              >
+                {postData.private
+                  ? "Post visibility : Private"
+                  : "Post visibility : Public"}
+              </strong>
+              <div className="flex w-full justify-between items-center pt-3">
+                <p className="font-semibold text-end p-2 border rounded-lg w-fit">
+                  Author : {postData?.userId?.username}
+                </p>
+                {tabView === "allposts" && (
+                  <div className="flex justify-around items-center gap-7">
+                    <div
+                      className="border rounded-lg shadow-lg p-3 flex justify-center items-center text-[1.2rem] w-fit  cursor-pointer"
+                      onClick={() => setUpdateModal(true)}
+                    >
+                      <FaRegEdit />
+                    </div>
+                    <div
+                      className="border rounded-lg shadow-lg p-3 flex justify-center items-center text-[1.2rem] w-fit  cursor-pointer text-red-700"
+                      onClick={showDeleteConfirm}
+                    >
+                      <MdDeleteOutline />
+                    </div>
                   </div>
-                  <div
-                    className="border rounded-lg shadow-lg p-3 flex justify-center items-center text-[1.2rem] w-fit  cursor-pointer text-red-700"
-                    onClick={showDeleteConfirm}
-                  >
-                    <MdDeleteOutline />
-                  </div>
-                </div>
-              )}
-            </div>
-          </Card>
+                )}
+              </div>
+            </Card>
+          </div>
 
           <div className="flex flex-col justify-start items-center p-3 gap-5 self-end h-full">
             <div className="flex justify-between items-center w-full p-1">
