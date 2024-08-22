@@ -16,7 +16,7 @@ Flow of applicaiton  =>
     
     7. By clicking on create post tab one can create a new post with image , title and description.
 
-Some Keys of project  =>
+Some Keys of project (Optimization Techniques Used)  =>
 
     1. Used AWS S3 Bucket to store the images so that we do not overload our Databse in terms of storage and better optimization
     
