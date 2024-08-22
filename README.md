@@ -20,7 +20,7 @@
 
 # Some Keys of project (Optimization Techniques Used)  =>
 
-    1. Used AWS S3 Bucket to store the images so that we do not overload our Databse in terms of storage and better optimization
+    1. Used AWS S3 Bucket to store the images so that we do not overload our Databse in terms of storage and better optimization.
     
     2. Used Debounce technique on search functionality to optimize the network calls.
     
