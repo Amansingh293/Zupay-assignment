@@ -1,8 +1,8 @@
 # README
 
-Vercel deployed link => https://zupay-assignment.vercel.app/login
+# Vercel deployed link => https://zupay-assignment.vercel.app/login
 
-Flow of applicaiton  =>
+# Flow of applicaiton  =>
 
     1. User needs to register and then login.
     
@@ -18,7 +18,7 @@ Flow of applicaiton  =>
     
     7. By clicking on create post tab one can create a new post with image , title and description.
 
-Some Keys of project (Optimization Techniques Used)  =>
+# Some Keys of project (Optimization Techniques Used)  =>
 
     1. Used AWS S3 Bucket to store the images so that we do not overload our Databse in terms of storage and better optimization
     
@@ -27,7 +27,7 @@ Some Keys of project (Optimization Techniques Used)  =>
     3. Used Redux toolkit to manage the state accross application so that to avoid prop drilling.
 
     
-Technologies used  =>
+# Technologies used  =>
 
     1. ReactJs
     2. NodeJs
