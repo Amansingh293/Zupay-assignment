@@ -2,7 +2,7 @@
 
 # Vercel deployed link => https://zupay-assignment.vercel.app/login
 
-# Note => Since Render hibernates the server if it does not request for 50 secs thus on first request it will take little time
+Note => Since Render hibernates the server if it does not request for 50 secs thus on first request it will take little time
 as Render awakens the server and then respone back.
 
 # Flow of applicaiton  =>
