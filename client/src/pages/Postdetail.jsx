@@ -28,6 +28,7 @@ const Postdetail = () => {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const tabView = useSelector((state) => state.currentTab.value);
 
   const [postData, setPostData] = useState();
 
@@ -108,7 +109,6 @@ const Postdetail = () => {
       }
       console.log(response);
       setUpdateModal(false);
-      //   form.resetFields();
     } catch (error) {
       message.error(error?.response?.data.message);
     }
@@ -171,7 +171,7 @@ const Postdetail = () => {
         <div className="grid grid-cols-auto md:grid-cols-2 w-full p-2">
           <Card
             hoverable
-            className="p-2 flex flex-col"
+            className="p-2 flex flex-col h-fit"
             cover={
               <img
                 alt="example"
@@ -199,20 +199,22 @@ const Postdetail = () => {
               <p className="font-semibold text-end p-2 border rounded-lg w-fit">
                 Author : {postData?.userId?.username}
               </p>
-              <div className="flex justify-around items-center gap-7">
-                <div
-                  className="border rounded-lg shadow-lg p-3 flex justify-center items-center text-[1.2rem] w-fit  cursor-pointer"
-                  onClick={() => setUpdateModal(true)}
-                >
-                  <FaRegEdit />
+              {tabView === "allposts" && (
+                <div className="flex justify-around items-center gap-7">
+                  <div
+                    className="border rounded-lg shadow-lg p-3 flex justify-center items-center text-[1.2rem] w-fit  cursor-pointer"
+                    onClick={() => setUpdateModal(true)}
+                  >
+                    <FaRegEdit />
+                  </div>
+                  <div
+                    className="border rounded-lg shadow-lg p-3 flex justify-center items-center text-[1.2rem] w-fit  cursor-pointer text-red-700"
+                    onClick={showDeleteConfirm}
+                  >
+                    <MdDeleteOutline />
+                  </div>
                 </div>
-                <div
-                  className="border rounded-lg shadow-lg p-3 flex justify-center items-center text-[1.2rem] w-fit  cursor-pointer text-red-700"
-                  onClick={showDeleteConfirm}
-                >
-                  <MdDeleteOutline />
-                </div>
-              </div>
+              )}
             </div>
           </Card>
 

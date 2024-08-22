@@ -169,6 +169,12 @@ router.put(
         .populate({ path: "userId", select: "-password" });
       const { title, description, privateValue } = request.body;
 
+      if (String(request.body.userId) !== String(post.userId._id)) {
+        return response
+          .status(404)
+          .json({ success: false, message: "You cannot update this post!!" });
+      }
+
       if (title) {
         post.title = title;
       }
@@ -198,6 +204,14 @@ router.put(
 
 router.delete("/delete/:id", authMiddleware, async (request, response) => {
   try {
+    const currentPost = await Post.findById(request.params.id);
+
+    if (String(request.body.userId) !== String(currentPost.userId)) {
+      return response
+        .status(404)
+        .json({ success: false, message: "You cannot delte this post!!" });
+    }
+    
     const post = await Post.findByIdAndDelete(request.params.id);
 
     return response
