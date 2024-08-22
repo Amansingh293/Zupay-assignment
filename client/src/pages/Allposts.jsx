@@ -97,7 +97,7 @@ const Allposts = ({ privatePosts }) => {
   useEffect(() => {
     if (!localStorage.getItem("zupayAuthToken")) {
       dispatch(updateLoginState());
-      message.error("Something wetn wrong !! Please relogin !!");
+      message.error("Something went wrong !! Please relogin !!");
       navigate("/login");
     }
 
