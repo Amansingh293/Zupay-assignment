@@ -29,12 +29,15 @@ const Postdetail = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const tabView = useSelector((state) => state.currentTab.value);
+  const [loading, setLoading] = useState(false);
 
   const [postData, setPostData] = useState();
 
   const [updateModal, setUpdateModal] = useState(false);
 
   const postFetcher = async () => {
+    setLoading(true);
+
     try {
       const response = await axios.get(
         base_url + `/api/post/get-posts/${postId}`,
@@ -54,9 +57,11 @@ const Postdetail = () => {
     } catch (error) {
       message.error(error?.response?.data?.message);
     }
+    setLoading(false);
   };
 
   const createComment = async (values) => {
+    setLoading(true);
     try {
       await form.validateFields();
       const data = { ...values, id: postId };
@@ -78,9 +83,12 @@ const Postdetail = () => {
     } catch (error) {
       message.error(error?.response?.data.message);
     }
+    setLoading(false);
   };
 
   const updatePostHandler = async (values) => {
+    setLoading(true);
+
     try {
       console.log(values);
       await form.validateFields();
@@ -112,9 +120,12 @@ const Postdetail = () => {
     } catch (error) {
       message.error(error?.response?.data.message);
     }
+    setLoading(false);
   };
 
   const deletePostHandler = async () => {
+    setLoading(true);
+
     try {
       const response = await axios.delete(
         base_url + `/api/post/delete/${postId}`,
@@ -135,6 +146,7 @@ const Postdetail = () => {
     } catch (error) {
       message.error("Something went wrong!!");
     }
+    setLoading(false);
   };
 
   const showDeleteConfirm = () => {
@@ -165,34 +177,34 @@ const Postdetail = () => {
   console.log(postData);
   return (
     <>
-      {!postData ? (
+      {loading ? (
         <Loader />
       ) : (
         <div className="grid grid-cols-auto md:grid-cols-2 w-full p-2">
           <div className="flex justify-center items-start h-full">
             <Card
               hoverable
-              className="p-2 flex flex-col h-fit w-[22rem] md:w-auto"
+              className="p-2 flex flex-col h-fit w-[22rem] md:w-full"
               cover={
                 <img
                   alt="example"
-                  src={postData.imageUrl}
+                  src={postData?.imageUrl}
                   className="rounded-xl shadow-lg border h-[300px] bg-cover bg-center w-full "
                 />
               }
-              key={postData._id}
+              key={postData?._id}
             >
               <Meta
-                title={postData.title}
-                description={postData.description}
+                title={postData?.title}
+                description={postData?.description}
                 className="font-semibold flex flex-col gap-5"
               />
               <strong
                 className={`${
-                  postData.private ? "text-blue-500" : "text-red-600"
+                  postData?.private ? "text-blue-500" : "text-red-600"
                 }`}
               >
-                {postData.private
+                {postData?.private
                   ? "Post visibility : Private"
                   : "Post visibility : Public"}
               </strong>
@@ -232,7 +244,7 @@ const Postdetail = () => {
             </div>
             <div className="grid 2xl:grid-cols-2  gap-5 p-3 w-full">
               {postData?.comments?.length !== 0 ? (
-                postData.comments.map((comment) => {
+                postData?.comments.map((comment) => {
                   return (
                     <div
                       key={comment._id}

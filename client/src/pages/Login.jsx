@@ -1,17 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { base_url } from "../constants";
 import { Form, Button, Input, message } from "antd";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { updateLoginState } from "../slices/loginSlice";
+import Loader from "../components/Loader";
 
 const Login = () => {
   const [form] = Form.useForm();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
 
   const loginFunction = async (values) => {
+    setLoading(true);
     try {
       await form.validateFields();
       const response = await axios.post(base_url + "/api/auth/login", values);
@@ -20,6 +23,7 @@ const Login = () => {
         message.success("Logged In");
         localStorage.setItem("zupayAuthToken", response.data.data);
         dispatch(updateLoginState());
+        setLoading(false);
         navigate("/");
       } else {
         message.error("Something went wrong !! Login again !!");
@@ -28,54 +32,67 @@ const Login = () => {
       message.error("Something went wrong !! Login again !!");
       console.error("Login failed:", error);
     }
+    setLoading(false);
   };
 
+  useEffect(() => {
+    if (localStorage.getItem("zupayAuthToken")) {
+      localStorage.removeItem("zupayAuthToken");
+      dispatch(updateLoginState());
+    }
+  }, []);
   return (
-    <div className="flex justify-center items-center h-[100%] w-full p-6 md:p-0">
-      <Form
-        form={form}
-        name="Login"
-        onFinish={loginFunction}
-        className="border rounded-xl shadow-xl p-7"
-      >
-        <Form.Item>
-          <h1 className="font-bold text-[1.1rem] text-center">
-            Enter Credential to Login
-          </h1>
-        </Form.Item>
-        <Form.Item
-          label="Email"
-          name="email"
-          rules={[
-            {
-              required: true,
-              message: "Please input your Email!",
-            },
-          ]}
-        >
-          <Input />
-        </Form.Item>
+    <>
+      {loading ? (
+        <Loader />
+      ) : (
+        <div className="flex justify-center items-center h-[100%] w-full p-6 md:p-0">
+          <Form
+            form={form}
+            name="Login"
+            onFinish={loginFunction}
+            className="border rounded-xl shadow-xl p-7"
+          >
+            <Form.Item>
+              <h1 className="font-bold text-[1.1rem] text-center">
+                Enter Credential to Login
+              </h1>
+            </Form.Item>
+            <Form.Item
+              label="Email"
+              name="email"
+              rules={[
+                {
+                  required: true,
+                  message: "Please input your Email!",
+                },
+              ]}
+            >
+              <Input />
+            </Form.Item>
 
-        <Form.Item
-          label="Password"
-          name="password"
-          rules={[
-            {
-              required: true,
-              message: "Please input your password!",
-            },
-          ]}
-        >
-          <Input.Password />
-        </Form.Item>
+            <Form.Item
+              label="Password"
+              name="password"
+              rules={[
+                {
+                  required: true,
+                  message: "Please input your password!",
+                },
+              ]}
+            >
+              <Input.Password />
+            </Form.Item>
 
-        <Form.Item>
-          <Button type="primary" htmlType="submit">
-            Submit
-          </Button>
-        </Form.Item>
-      </Form>
-    </div>
+            <Form.Item>
+              <Button type="primary" htmlType="submit">
+                Submit
+              </Button>
+            </Form.Item>
+          </Form>
+        </div>
+      )}
+    </>
   );
 };
 

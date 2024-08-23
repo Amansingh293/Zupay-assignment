@@ -62,77 +62,79 @@ const Createpost = () => {
 
   return (
     <>
-      <Modal
-        open={tabView === "createpost"}
-        onCancel={() => dispatch(updateCurrentTab("allposts"))}
-        footer={null}
-      >
-        <Form form={form} name="Login" onFinish={createPostHandler}>
-          <Form.Item>
-            <h1 className="font-bold text-[1.1rem] text-center">
-              Enter Details for post
-            </h1>
-          </Form.Item>
-          <Form.Item
-            label="Title"
-            name="title"
-            rules={[
-              {
-                required: true,
-                message: "Please enter Title!",
-              },
-            ]}
-          >
-            <Input />
-          </Form.Item>
-
-          <Form.Item
-            label="File"
-            name="file"
-            valuePropName="fileList"
-            getValueFromEvent={(e) => {
-              if (Array.isArray(e)) {
-                return e;
-              }
-              return e && e.fileList;
-            }}
-          >
-            <Upload
-              name="file"
-              beforeUpload={() => false}
-              accept=".jpg,.jpeg,.png,.pdf"
+      {loading ? (
+        <Loader />
+      ) : (
+        <Modal
+          open={tabView === "createpost"}
+          onCancel={() => dispatch(updateCurrentTab("allposts"))}
+          footer={null}
+        >
+          <Form form={form} name="Login" onFinish={createPostHandler}>
+            <Form.Item>
+              <h1 className="font-bold text-[1.1rem] text-center">
+                Enter Details for post
+              </h1>
+            </Form.Item>
+            <Form.Item
+              label="Title"
+              name="title"
+              rules={[
+                {
+                  required: true,
+                  message: "Please enter Title!",
+                },
+              ]}
             >
-              <Button icon={<MdOutlineFileUpload />}>Upload</Button>
-            </Upload>
-          </Form.Item>
-          <Form.Item
-            label="Description"
-            name="description"
-            rules={[
-              {
-                required: true,
-                message: "Please enter a description!",
-              },
-            ]}
-          >
-            <Input.TextArea
-              style={{ resize: "none" }}
-              rows={4}
-              placeholder="Enter your description here"
-            />
-          </Form.Item>
-          <Form.Item name="private" valuePropName="checked">
-            <Checkbox>Private post</Checkbox>
-          </Form.Item>
-          <Form.Item>
-            <Button type="primary" htmlType="submit">
-              Submit
-            </Button>
-          </Form.Item>
-        </Form>
-      </Modal>
+              <Input />
+            </Form.Item>
 
-      {loading && <Loader />}
+            <Form.Item
+              label="File"
+              name="file"
+              valuePropName="fileList"
+              getValueFromEvent={(e) => {
+                if (Array.isArray(e)) {
+                  return e;
+                }
+                return e && e.fileList;
+              }}
+            >
+              <Upload
+                name="file"
+                beforeUpload={() => false}
+                accept=".jpg,.jpeg,.png,.pdf"
+              >
+                <Button icon={<MdOutlineFileUpload />}>Upload</Button>
+              </Upload>
+            </Form.Item>
+            <Form.Item
+              label="Description"
+              name="description"
+              rules={[
+                {
+                  required: true,
+                  message: "Please enter a description!",
+                },
+              ]}
+            >
+              <Input.TextArea
+                style={{ resize: "none" }}
+                rows={4}
+                placeholder="Enter your description here"
+              />
+            </Form.Item>
+            <Form.Item name="private" valuePropName="checked">
+              <Checkbox>Private post</Checkbox>
+            </Form.Item>
+            <Form.Item>
+              <Button type="primary" htmlType="submit">
+                Submit
+              </Button>
+            </Form.Item>
+          </Form>
+        </Modal>
+      )}
     </>
   );
 };
